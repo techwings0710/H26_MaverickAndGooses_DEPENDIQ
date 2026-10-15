@@ -47,7 +47,7 @@ class GemmaClient:
                 with httpx.Client(base_url=self.base, timeout=self.timeout, transport=self.transport, trust_env=False) as client:
                     response = client.post('/api/chat', json={'model': self.model, 'messages': conversation,
                         'stream': False, 'format': Recommendation.model_json_schema(), 'think': False,
-                        'options': {'temperature': 0.2, 'num_predict': 1800, 'num_ctx': 8192}, 'keep_alive': '5m'})
+                        'options': {'temperature': 0.2, 'num_predict': 3000, 'num_ctx': 8192}, 'keep_alive': '5m'})
                     response.raise_for_status()
                     body = response.json()
                     if body.get('done') is False:

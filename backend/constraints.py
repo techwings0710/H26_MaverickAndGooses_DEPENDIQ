@@ -8,9 +8,9 @@ def compatible(constraints: list[str]) -> tuple[str, str]:
     specs = list(combined)
     pins = [s.version for s in specs if s.operator == '==' and '*' not in s.version]
     if pins:
-        pin = pins[0]
-        if not combined.contains(pin, prereleases=True):
-            return 'conflict', f'Exact pin {pin} cannot satisfy the combined constraints {combined}.'
+        pin = next((p for p in pins if combined.contains(p, prereleases=True)), None)
+        if pin is None:
+            return 'conflict', f'Exact pins {pins} cannot satisfy the combined constraints {combined}.'
         return 'compatible', f'{pin} is a PEP 440 witness; release availability is not checked.'
     lower, upper = None, None
     complex_form = False

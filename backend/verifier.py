@@ -35,32 +35,42 @@ def run_command(command, timeout=120):
 
 def rewrite(root, dependency, version):
     """Update only observed PEP 508 literal declarations in disposable copies."""
+    from packaging.requirements import Requirement, InvalidRequirement
+    def replace_requirement(raw):
+        try:
+            req = Requirement(raw)
+        except InvalidRequirement:
+            return raw
+        if canonicalize_name(req.name) != dependency or req.url:
+            return raw
+        extras = '[' + ','.join(sorted(req.extras)) + ']' if req.extras else ''
+        return req.name + extras + '==' + version + ('; ' + str(req.marker) if req.marker else '')
     changed = []
-    pattern = re.compile(r'(?i)(?<![\w.-])' + re.escape(dependency).replace(r'\-', '[-_.]') + r'(\[[^\]]+\])?\s*(?:[~<>=!][^\s\"\'\];#]*)?')
     for path in files(root):
         if path.name != 'pyproject.toml' and not (path.name.startswith('requirements') and path.suffix in ('.txt', '.in')):
             continue
         text = path.read_text()
-        updated = pattern.sub(lambda m: dependency + (m.group(1) or '') + '==' + version, text)
+        if path.name == 'pyproject.toml':
+            # Quoted PEP 508 literals only. Preserve each original quote style.
+            pattern = re.compile(r"([\"'])([^\"'\n]*)([\"'])")
+            def literal(match):
+                if match[1] != match[3]: return match[0]
+                return match[1] + replace_requirement(match[2]) + match[3]
+            updated = pattern.sub(literal, text)
+        else:
+            lines = []
+            for line in text.splitlines(keepends=True):
+                if line.lstrip().startswith(('#', '-')):
+                    lines.append(line)
+                    continue
+                body, *comment = re.split(r'\s+#', line.rstrip('\r\n'), maxsplit=1)
+                replacement = replace_requirement(body.strip())
+                lines.append(replacement + ('  #' + comment[0] if comment else '') + ('\n' if line.endswith('\n') else ''))
+            updated = ''.join(lines)
         if updated != text:
             path.write_text(updated)
             changed.append(str(path.relative_to(root)))
     return changed
-
-
-def static_check(root):
-    errors = []
-    count = 0
-    for path in files(root):
-        if path.suffix == '.py':
-            count += 1
-            try:
-                ast.parse(path.read_text(), filename=str(path.relative_to(root)))
-            except (SyntaxError, UnicodeError) as exc:
-                errors.append(str(exc))
-    result = scan(str(root))
-    return {'classification': 'OBSERVED', 'check': 'AST parse and manifest constraint analysis; no project code executed',
-            'python_files': count, 'syntax_errors': errors, 'conflicts': [d.name for d in result.dependencies if d.risk_level == 'high'], 'scan_errors': result.scan_errors}
 
 
 def execute(root, image):
@@ -136,8 +146,6 @@ def verify(request, snapshot):
                 shutil.copyfile(path, out)
         changed = rewrite(target, name, version)
         # Copies are internal trusted paths for deterministic parsing only.
-        previous = os.environ.get('DEPENDIQ_APPROVED_ROOTS')
-        # Avoid global environment mutation: scanner accepts an internal approval explicitly below.
         static = {'baseline': static_syntax_and_constraints(base), 'migration': static_syntax_and_constraints(target),
                   'changed_files': changed, 'classification': 'OBSERVED'}
         reason = None
