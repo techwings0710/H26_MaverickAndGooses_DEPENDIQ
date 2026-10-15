@@ -1,0 +1,13 @@
+{
+  "health_status": 200,
+  "scan_status": 200,
+  "analysis_status": 200,
+  "capsule_status": 200,
+  "dependencies": 14,
+  "python_files": 15,
+  "usage_references": 62,
+  "ai_status": "completed",
+  "recommendations": 5,
+  "verification_status": "NOT RUN",
+  "baseline_reason": "Execution disabled. Enable DEPENDIQ_ENABLE_EXECUTION=1, inspect/trust the repository, and prepare Docker with offline wheels."
+}

@@ -1,0 +1,1439 @@
+{
+  "schema_version": "1.0.0",
+  "kind": "Dependency Exit Capsule",
+  "generation": {
+    "generated_at": "2026-10-15T07:10:04.282369+00:00",
+    "generator": "DEPENDIQ 1.0.0"
+  },
+  "evidence_legend": {
+    "OBSERVED": "Deterministic repository observations; see scope limitations.",
+    "AI-SUGGESTED": "Unverified local model recommendations.",
+    "EXECUTION-VERIFIED": "Actually attempted commands with recorded outcomes; failure is not compatibility."
+  },
+  "scan": {
+    "scan_id": "625b055f-d880-4bb6-b9bd-7364413f59db",
+    "repository": "dependiq-LinkWatch",
+    "repository_path": "/private/tmp/dependiq-LinkWatch",
+    "status": "success",
+    "fingerprint": "7eade00f4f85c3f69d87bcff685f943a7b86a2a542d5431960fe7c6469a78d23",
+    "generated_at": "2026-10-15T07:08:27.626314+00:00",
+    "dependencies": [
+      {
+        "name": "pydantic",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 17,
+            "constraint": ">=2",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 5,
+            "constraint": "==1.10.13",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "high",
+        "risk_indicators": [
+          "Conflicting version constraints"
+        ],
+        "usage_locations": [
+          {
+            "file": "linkwatch/config.py",
+            "line": 4,
+            "symbol": "pydantic.BaseModel",
+            "kind": "import",
+            "snippet": "from pydantic import BaseModel, validator",
+            "mapping": "local installed distribution metadata (not target environment)"
+          },
+          {
+            "file": "linkwatch/config.py",
+            "line": 4,
+            "symbol": "pydantic.validator",
+            "kind": "import",
+            "snippet": "from pydantic import BaseModel, validator",
+            "mapping": "local installed distribution metadata (not target environment)"
+          },
+          {
+            "file": "linkwatch/config.py",
+            "line": 7,
+            "symbol": "pydantic.BaseModel",
+            "kind": "usage",
+            "snippet": "class Site(BaseModel):",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/config.py",
+            "line": 27,
+            "symbol": "pydantic.BaseModel",
+            "kind": "usage",
+            "snippet": "class Settings(BaseModel):",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/config.py",
+            "line": 14,
+            "symbol": "pydantic.validator",
+            "kind": "usage",
+            "snippet": "@validator(\"name\")",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/config.py",
+            "line": 20,
+            "symbol": "pydantic.validator",
+            "kind": "usage",
+            "snippet": "@validator(\"url\")",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "tests/test_checker.py",
+            "line": 2,
+            "symbol": "linkwatch.config",
+            "kind": "affected-module test reference",
+            "snippet": "from linkwatch.config import Site",
+            "mapping": "AST import of a module that imports this dependency; test coverage not established"
+          },
+          {
+            "file": "tests/test_config.py",
+            "line": 3,
+            "symbol": "linkwatch.config",
+            "kind": "affected-module test reference",
+            "snippet": "from linkwatch.config import Settings, Site, load_settings",
+            "mapping": "AST import of a module that imports this dependency; test coverage not established"
+          }
+        ],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 17,
+            "detail": "pydantic>=2"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 5,
+            "detail": "pydantic==1.10.13"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "manifest_conflict",
+            "file": "pyproject.toml, requirements.txt",
+            "line": null,
+            "detail": "Exact pins ['1.10.13'] cannot satisfy the combined constraints ==1.10.13,>=2. Runtime and development declarations are compared together; alternative installers may resolve different environments."
+          }
+        ],
+        "uncertainties": [],
+        "ai_recommendation": {
+          "proposed_replacement": "pydantic>=2",
+          "technical_reasoning": "The repository observes conflicting version constraints for pydantic: pyproject.toml specifies `>=2` while requirements.txt specifies `==1.10.13`. This conflict suggests an environment setup issue.",
+          "migration_steps": [
+            "Update requirements.txt to reflect the minimum version constraint from pyproject.toml, e.g., change `==1.10.13` to `>=2` or remove the constraint if pyproject.toml is the source of truth.",
+            "Verify that all code relying on pydantic imports functions correctly after the version change.",
+            "Ensure that the project's dependency management system (pyproject.toml vs requirements.txt) is consistent.",
+            "Run tests related to linkwatch.config to confirm functionality."
+          ],
+          "suggested_tests": [
+            "Test import of BaseModel and validator in linkwatch/config.py.",
+            "Test instantiation of Site and Settings classes.",
+            "Verify that the application runs without dependency resolution errors."
+          ],
+          "potential_compatibility_gaps": [
+            "Compatibility with older code relying on specific features of Pydantic < 2.0.",
+            "Potential runtime errors if the change in Pydantic version alters BaseModel or validator behavior."
+          ],
+          "uncertainties": [
+            "Release availability of Pydantic >=2.",
+            "Security implications of upgrading from 1.10.13."
+          ],
+          "confidence": "low",
+          "classification": "AI-SUGGESTED",
+          "verified": false
+        },
+        "ai_error": null
+      },
+      {
+        "name": "pytest",
+        "declared_versions": [
+          {
+            "file": "requirements-dev.txt",
+            "line": 1,
+            "constraint": "",
+            "marker": "",
+            "group": "dev",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "medium",
+        "risk_indicators": [
+          "Unbounded dependency declaration"
+        ],
+        "usage_locations": [
+          {
+            "file": "tests/conftest.py",
+            "line": 6,
+            "symbol": "pytest",
+            "kind": "import",
+            "snippet": "import pytest",
+            "mapping": "local installed distribution metadata (not target environment)"
+          },
+          {
+            "file": "tests/conftest.py",
+            "line": 70,
+            "symbol": "pytest",
+            "kind": "test reference",
+            "snippet": "@pytest.fixture",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "tests/conftest.py",
+            "line": 60,
+            "symbol": "pytest",
+            "kind": "test reference",
+            "snippet": "@pytest.fixture(scope=\"session\")",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "sites.toml",
+            "line": 6,
+            "symbol": "pytest",
+            "kind": "configuration text reference",
+            "snippet": "url = \"https://www.python.org\"",
+            "mapping": "literal text match only; configuration semantics unconfirmed"
+          },
+          {
+            "file": "sites.toml",
+            "line": 10,
+            "symbol": "pytest",
+            "kind": "configuration text reference",
+            "snippet": "url = \"https://pypi.org\"",
+            "mapping": "literal text match only; configuration semantics unconfirmed"
+          }
+        ],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements-dev.txt",
+            "line": 1,
+            "detail": "pytest"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "reproducibility",
+            "file": "requirements-dev.txt",
+            "line": 1,
+            "detail": "No declared version boundary. A lockfile may mitigate this; no vulnerability or abandonment claim is made."
+          }
+        ],
+        "uncertainties": [],
+        "ai_recommendation": {
+          "proposed_replacement": "pytest>=7.0.0",
+          "technical_reasoning": "The observation indicates an unbounded dependency declaration for 'pytest' in 'requirements-dev.txt'. This lack of version pinning increases the risk of unexpected behavior during dependency resolution.",
+          "migration_steps": [
+            "Update 'requirements-dev.txt' to pin pytest to a specific, compatible version, e.g., 'pytest==7.4.0'.",
+            "Verify that all test fixtures and configuration references in 'tests/conftest.py' still function correctly with the new version.",
+            "Ensure that any implicit dependency resolution logic is updated to handle the newly pinned version."
+          ],
+          "suggested_tests": [
+            "Run a basic test suite to confirm pytest execution.",
+            "Verify fixture scoping (@pytest.fixture(scope='session')) works as expected.",
+            "Check configuration loading in 'sites.toml' for correct URL resolution."
+          ],
+          "potential_compatibility_gaps": [
+            "Compatibility with older pytest features might be lost if upgrading significantly.",
+            "API changes in pytest versions could affect fixture handling or configuration parsing."
+          ],
+          "uncertainties": [
+            "Release availability of specific versions is unknown.",
+            "Compatibility with the exact configuration semantics in 'sites.toml' is unconfirmed."
+          ],
+          "confidence": "low",
+          "classification": "AI-SUGGESTED",
+          "verified": false
+        },
+        "ai_error": null
+      },
+      {
+        "name": "python-dateutil",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 23,
+            "constraint": "",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 11,
+            "constraint": "",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "medium",
+        "risk_indicators": [
+          "Unbounded dependency declaration"
+        ],
+        "usage_locations": [
+          {
+            "file": "linkwatch/dates.py",
+            "line": 1,
+            "symbol": "dateutil.parser",
+            "kind": "import",
+            "snippet": "from dateutil import parser",
+            "mapping": "documented distribution/import alias"
+          },
+          {
+            "file": "linkwatch/dates.py",
+            "line": 8,
+            "symbol": "dateutil.parser",
+            "kind": "usage",
+            "snippet": "return parser.parse(value)",
+            "mapping": "documented distribution/import alias; AST alias match, scope/shadowing not resolved"
+          }
+        ],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 23,
+            "detail": "python-dateutil"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 11,
+            "detail": "python-dateutil"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "reproducibility",
+            "file": "pyproject.toml",
+            "line": 23,
+            "detail": "No declared version boundary. A lockfile may mitigate this; no vulnerability or abandonment claim is made."
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "reproducibility",
+            "file": "requirements.txt",
+            "line": 11,
+            "detail": "No declared version boundary. A lockfile may mitigate this; no vulnerability or abandonment claim is made."
+          }
+        ],
+        "uncertainties": [],
+        "ai_recommendation": {
+          "proposed_replacement": "dateutil",
+          "technical_reasoning": "The dependency is `python-dateutil`, which is likely an older package. Migrating to the modern `dateutil` package might simplify dependency management.",
+          "migration_steps": [
+            "Update `pyproject.toml` to specify a version constraint for `python-dateutil` if possible.",
+            "Update `requirements.txt` to specify a version constraint for `python-dateutil` if possible.",
+            "Verify that `from dateutil import parser` still functions correctly in `linkwatch/dates.py` after dependency resolution.",
+            "Test the usage `parser.parse(value)` for compatibility with the new package structure."
+          ],
+          "suggested_tests": [
+            "Test successful import and function call in `linkwatch/dates.py` using the new package.",
+            "Verify that the parsing behavior of `parser.parse()` remains identical to the previous version."
+          ],
+          "potential_compatibility_gaps": [
+            "API changes in `dateutil` might affect how `parser.parse()` handles specific date formats.",
+            "The specific behavior of `parser.parse()` might change between versions."
+          ],
+          "uncertainties": [
+            "Release availability for a specific version of `dateutil` is unknown.",
+            "Compatibility of `parser.parse()` behavior is not guaranteed."
+          ],
+          "confidence": "low",
+          "classification": "AI-SUGGESTED",
+          "verified": false
+        },
+        "ai_error": null
+      },
+      {
+        "name": "rich",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 24,
+            "constraint": "",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 12,
+            "constraint": "",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "medium",
+        "risk_indicators": [
+          "Unbounded dependency declaration"
+        ],
+        "usage_locations": [
+          {
+            "file": "linkwatch/cli.py",
+            "line": 2,
+            "symbol": "rich.console.Console",
+            "kind": "import",
+            "snippet": "from rich.console import Console",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 3,
+            "symbol": "rich.live.Live",
+            "kind": "import",
+            "snippet": "from rich.live import Live",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 4,
+            "symbol": "rich.table.Table",
+            "kind": "import",
+            "snippet": "from rich.table import Table",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 9,
+            "symbol": "rich.console.Console",
+            "kind": "usage",
+            "snippet": "console = Console()",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 13,
+            "symbol": "rich.table.Table",
+            "kind": "usage",
+            "snippet": "table = Table(title=title)",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 40,
+            "symbol": "rich.live.Live",
+            "kind": "usage",
+            "snippet": "with Live(build_table(settings.title, results), console=console,",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "tests/conftest.py",
+            "line": 8,
+            "symbol": "linkwatch.cli",
+            "kind": "affected-module test reference",
+            "snippet": "import linkwatch.cli  # noqa: F401",
+            "mapping": "AST import of a module that imports this dependency; test coverage not established"
+          },
+          {
+            "file": "tests/test_report.py",
+            "line": 4,
+            "symbol": "linkwatch.cli",
+            "kind": "affected-module test reference",
+            "snippet": "from linkwatch.cli import cli",
+            "mapping": "AST import of a module that imports this dependency; test coverage not established"
+          }
+        ],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 24,
+            "detail": "rich"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 12,
+            "detail": "rich"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "reproducibility",
+            "file": "pyproject.toml",
+            "line": 24,
+            "detail": "No declared version boundary. A lockfile may mitigate this; no vulnerability or abandonment claim is made."
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "reproducibility",
+            "file": "requirements.txt",
+            "line": 12,
+            "detail": "No declared version boundary. A lockfile may mitigate this; no vulnerability or abandonment claim is made."
+          }
+        ],
+        "uncertainties": [],
+        "ai_recommendation": {
+          "proposed_replacement": "rich>=2.0.0",
+          "technical_reasoning": "The repository uses 'rich' without declared version constraints, increasing the risk of dependency conflicts. Migrating to a specific version constraint in pyproject.toml and requirements.txt will improve reproducibility.",
+          "migration_steps": [
+            "Update pyproject.toml line 24 to specify a version constraint for 'rich'.",
+            "Update requirements.txt line 12 to specify a version constraint for 'rich'.",
+            "Verify that all usage patterns (Console, Table, Live) remain compatible with the new 'rich' version.",
+            "Run tests to ensure functionality is preserved."
+          ],
+          "suggested_tests": [
+            "Test import statements from linkwatch/cli.py for runtime errors.",
+            "Test usage of rich.console.Console() for correct initialization.",
+            "Test usage of rich.table.Table() for correct table rendering.",
+            "Test the integration of rich.live.Live() with build_table."
+          ],
+          "potential_compatibility_gaps": [
+            "Compatibility with older versions of Python if the new rich version introduces breaking API changes.",
+            "Potential issues if the usage patterns rely on deprecated features in the old rich library."
+          ],
+          "uncertainties": [
+            "Release availability of a specific 'rich' version is unknown.",
+            "Compatibility with the exact usage context is not verified."
+          ],
+          "confidence": "low",
+          "classification": "AI-SUGGESTED",
+          "verified": false
+        },
+        "ai_error": null
+      },
+      {
+        "name": "six",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 19,
+            "constraint": "",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 7,
+            "constraint": "",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "medium",
+        "risk_indicators": [
+          "Unbounded dependency declaration"
+        ],
+        "usage_locations": [],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 19,
+            "detail": "six"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 7,
+            "detail": "six"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "reproducibility",
+            "file": "pyproject.toml",
+            "line": 19,
+            "detail": "No declared version boundary. A lockfile may mitigate this; no vulnerability or abandonment claim is made."
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "reproducibility",
+            "file": "requirements.txt",
+            "line": 7,
+            "detail": "No declared version boundary. A lockfile may mitigate this; no vulnerability or abandonment claim is made."
+          }
+        ],
+        "uncertainties": [
+          "No mapped AST imports found. This does not prove the package is unused; dynamic imports and plugins are not resolved."
+        ],
+        "ai_recommendation": {
+          "proposed_replacement": "six-compatible-library",
+          "technical_reasoning": "The dependency on 'six' without a version constraint increases reproducibility risk. While 'six' is generally stable, explicit version pinning is recommended.",
+          "migration_steps": [
+            "Update `pyproject.toml` to specify a version constraint for 'six' if possible.",
+            "Update `requirements.txt` to specify a version constraint for 'six' if possible.",
+            "Verify that all code paths relying on 'six' function correctly after dependency updates."
+          ],
+          "suggested_tests": [
+            "Test code paths that interact with 'six' to ensure compatibility with the new version.",
+            "Run unit tests covering areas where 'six' usage is inferred."
+          ],
+          "potential_compatibility_gaps": [
+            "If 'six' is used for specific Python 2/3 compatibility features, ensure the replacement library maintains identical behavior.",
+            "Dynamic import scenarios might fail if the replacement library changes import mechanics."
+          ],
+          "uncertainties": [
+            "Release availability for a specific version of 'six' is unknown.",
+            "Compatibility with dynamic import patterns is unverified."
+          ],
+          "confidence": "low",
+          "classification": "AI-SUGGESTED",
+          "verified": false
+        },
+        "ai_error": null
+      },
+      {
+        "name": "appdirs",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 14,
+            "constraint": "==1.4.4",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 2,
+            "constraint": "==1.4.4",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "low",
+        "risk_indicators": [],
+        "usage_locations": [
+          {
+            "file": "linkwatch/cache.py",
+            "line": 4,
+            "symbol": "appdirs.user_cache_dir",
+            "kind": "import",
+            "snippet": "from appdirs import user_cache_dir",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/cache.py",
+            "line": 10,
+            "symbol": "appdirs.user_cache_dir",
+            "kind": "usage",
+            "snippet": "path = os.environ.get(\"LINKWATCH_CACHE_DIR\") or user_cache_dir(\"linkwatch\")",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          }
+        ],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 14,
+            "detail": "appdirs==1.4.4"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 2,
+            "detail": "appdirs==1.4.4"
+          }
+        ],
+        "uncertainties": [],
+        "ai_recommendation": null,
+        "ai_error": null
+      },
+      {
+        "name": "chardet",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 20,
+            "constraint": "==5.2.0",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 8,
+            "constraint": "==5.2.0",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "low",
+        "risk_indicators": [],
+        "usage_locations": [
+          {
+            "file": "linkwatch/encoding.py",
+            "line": 4,
+            "symbol": "chardet",
+            "kind": "import",
+            "snippet": "import chardet",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/encoding.py",
+            "line": 15,
+            "symbol": "chardet",
+            "kind": "usage",
+            "snippet": "guess = chardet.detect(resp.content)",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          }
+        ],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 20,
+            "detail": "chardet==5.2.0"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 8,
+            "detail": "chardet==5.2.0"
+          }
+        ],
+        "uncertainties": [],
+        "ai_recommendation": null,
+        "ai_error": null
+      },
+      {
+        "name": "click",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 18,
+            "constraint": ">=7",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 6,
+            "constraint": ">=7",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "low",
+        "risk_indicators": [],
+        "usage_locations": [
+          {
+            "file": "linkwatch/cli.py",
+            "line": 1,
+            "symbol": "click",
+            "kind": "import",
+            "snippet": "import click",
+            "mapping": "local installed distribution metadata (not target environment)"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 27,
+            "symbol": "click",
+            "kind": "usage",
+            "snippet": "@click.group()",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 28,
+            "symbol": "click",
+            "kind": "usage",
+            "snippet": "@click.version_option(__version__, prog_name=\"linkwatch\")",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 34,
+            "symbol": "click",
+            "kind": "usage",
+            "snippet": "@click.option(\"--config\", \"config_path\", default=\"sites.toml\", show_default=True,",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 51,
+            "symbol": "click",
+            "kind": "usage",
+            "snippet": "@click.option(\"--output\", \"-o\", default=\"status.html\", show_default=True,",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 53,
+            "symbol": "click",
+            "kind": "usage",
+            "snippet": "@click.option(\"--title\", default=\"linkwatch\", show_default=True)",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 62,
+            "symbol": "click",
+            "kind": "usage",
+            "snippet": "click.echo(\"Wrote %s\" % path)",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 68,
+            "symbol": "click",
+            "kind": "usage",
+            "snippet": "click.echo(\"Templates: %s\" % resources.template_dir())",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 69,
+            "symbol": "click",
+            "kind": "usage",
+            "snippet": "click.echo(\"Cache:     %s\" % cache.cache_file())",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/cli.py",
+            "line": 60,
+            "symbol": "click",
+            "kind": "usage",
+            "snippet": "raise click.ClickException(\"No cached results, run 'linkwatch check' first.\")",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "tests/test_report.py",
+            "line": 1,
+            "symbol": "click.testing.CliRunner",
+            "kind": "import",
+            "snippet": "from click.testing import CliRunner",
+            "mapping": "local installed distribution metadata (not target environment)"
+          },
+          {
+            "file": "tests/test_report.py",
+            "line": 20,
+            "symbol": "click.testing.CliRunner",
+            "kind": "test reference",
+            "snippet": "result = CliRunner().invoke(cli, [\"report\", \"-o\", str(output)], catch_exceptions=False)",
+            "mapping": "local installed distribution metadata (not target environment); AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "tests/conftest.py",
+            "line": 8,
+            "symbol": "linkwatch.cli",
+            "kind": "affected-module test reference",
+            "snippet": "import linkwatch.cli  # noqa: F401",
+            "mapping": "AST import of a module that imports this dependency; test coverage not established"
+          },
+          {
+            "file": "tests/test_report.py",
+            "line": 4,
+            "symbol": "linkwatch.cli",
+            "kind": "affected-module test reference",
+            "snippet": "from linkwatch.cli import cli",
+            "mapping": "AST import of a module that imports this dependency; test coverage not established"
+          }
+        ],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 18,
+            "detail": "click>=7"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 6,
+            "detail": "click>=7"
+          }
+        ],
+        "uncertainties": [],
+        "ai_recommendation": null,
+        "ai_error": null
+      },
+      {
+        "name": "idna",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 22,
+            "constraint": "==2.7",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 10,
+            "constraint": "==2.7",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "low",
+        "risk_indicators": [],
+        "usage_locations": [],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 22,
+            "detail": "idna==2.7"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 10,
+            "detail": "idna==2.7"
+          }
+        ],
+        "uncertainties": [
+          "No mapped AST imports found. This does not prove the package is unused; dynamic imports and plugins are not resolved."
+        ],
+        "ai_recommendation": null,
+        "ai_error": null
+      },
+      {
+        "name": "jinja2",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 16,
+            "constraint": "==2.11.3",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 4,
+            "constraint": "==2.11.3",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "low",
+        "risk_indicators": [],
+        "usage_locations": [
+          {
+            "file": "linkwatch/report.py",
+            "line": 3,
+            "symbol": "jinja2.Environment",
+            "kind": "import",
+            "snippet": "from jinja2 import Environment, FileSystemLoader, select_autoescape",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/report.py",
+            "line": 3,
+            "symbol": "jinja2.FileSystemLoader",
+            "kind": "import",
+            "snippet": "from jinja2 import Environment, FileSystemLoader, select_autoescape",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/report.py",
+            "line": 3,
+            "symbol": "jinja2.select_autoescape",
+            "kind": "import",
+            "snippet": "from jinja2 import Environment, FileSystemLoader, select_autoescape",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/report.py",
+            "line": 9,
+            "symbol": "jinja2.Environment",
+            "kind": "usage",
+            "snippet": "return Environment(",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/report.py",
+            "line": 10,
+            "symbol": "jinja2.FileSystemLoader",
+            "kind": "usage",
+            "snippet": "loader=FileSystemLoader(template_dir()),",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/report.py",
+            "line": 11,
+            "symbol": "jinja2.select_autoescape",
+            "kind": "usage",
+            "snippet": "autoescape=select_autoescape([\"html\", \"j2\"]),",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          }
+        ],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 16,
+            "detail": "Jinja2==2.11.3"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 4,
+            "detail": "Jinja2==2.11.3"
+          }
+        ],
+        "uncertainties": [],
+        "ai_recommendation": null,
+        "ai_error": null
+      },
+      {
+        "name": "nose",
+        "declared_versions": [
+          {
+            "file": "requirements-dev.txt",
+            "line": 2,
+            "constraint": "==1.3.7",
+            "marker": "",
+            "group": "dev",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "low",
+        "risk_indicators": [],
+        "usage_locations": [],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements-dev.txt",
+            "line": 2,
+            "detail": "nose==1.3.7"
+          }
+        ],
+        "uncertainties": [
+          "No mapped AST imports found. This does not prove the package is unused; dynamic imports and plugins are not resolved."
+        ],
+        "ai_recommendation": null,
+        "ai_error": null
+      },
+      {
+        "name": "requests",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 15,
+            "constraint": "==2.31.0",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 3,
+            "constraint": "==2.31.0",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "low",
+        "risk_indicators": [],
+        "usage_locations": [
+          {
+            "file": "linkwatch/checker.py",
+            "line": 5,
+            "symbol": "requests",
+            "kind": "import",
+            "snippet": "import requests",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/checker.py",
+            "line": 6,
+            "symbol": "requests.Session",
+            "kind": "import",
+            "snippet": "from requests import Session as S",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/checker.py",
+            "line": 13,
+            "symbol": "requests.Session",
+            "kind": "usage",
+            "snippet": "session = S()",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/checker.py",
+            "line": 35,
+            "symbol": "requests",
+            "kind": "usage",
+            "snippet": "except requests.exceptions.ConnectionError:",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/checker.py",
+            "line": 38,
+            "symbol": "requests",
+            "kind": "usage",
+            "snippet": "except requests.exceptions.Timeout:",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/encoding.py",
+            "line": 5,
+            "symbol": "requests.utils._parse_content_type_header",
+            "kind": "import",
+            "snippet": "from requests.utils import _parse_content_type_header",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/encoding.py",
+            "line": 11,
+            "symbol": "requests.utils._parse_content_type_header",
+            "kind": "usage",
+            "snippet": "_, params = _parse_content_type_header(resp.headers.get(\"Content-Type\", \"\"))",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/http_patch.py",
+            "line": 1,
+            "symbol": "requests",
+            "kind": "import",
+            "snippet": "import requests",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/http_patch.py",
+            "line": 5,
+            "symbol": "requests",
+            "kind": "usage",
+            "snippet": "_original_request = requests.Session.request",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "linkwatch/http_patch.py",
+            "line": 14,
+            "symbol": "requests",
+            "kind": "usage",
+            "snippet": "requests.Session.request = _request",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "tests/test_checker.py",
+            "line": 1,
+            "symbol": "linkwatch.checker",
+            "kind": "affected-module test reference",
+            "snippet": "from linkwatch.checker import check_site, fetch",
+            "mapping": "AST import of a module that imports this dependency; test coverage not established"
+          }
+        ],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 15,
+            "detail": "requests==2.31.0"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 3,
+            "detail": "requests==2.31.0"
+          }
+        ],
+        "uncertainties": [],
+        "ai_recommendation": null,
+        "ai_error": null
+      },
+      {
+        "name": "setuptools",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 21,
+            "constraint": "==75.8.0",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 9,
+            "constraint": "==75.8.0",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "low",
+        "risk_indicators": [],
+        "usage_locations": [],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 21,
+            "detail": "setuptools==75.8.0"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 9,
+            "detail": "setuptools==75.8.0"
+          }
+        ],
+        "uncertainties": [
+          "No mapped AST imports found. This does not prove the package is unused; dynamic imports and plugins are not resolved."
+        ],
+        "ai_recommendation": null,
+        "ai_error": null
+      },
+      {
+        "name": "toml",
+        "declared_versions": [
+          {
+            "file": "pyproject.toml",
+            "line": 13,
+            "constraint": "==0.10.2",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          },
+          {
+            "file": "requirements.txt",
+            "line": 1,
+            "constraint": "==0.10.2",
+            "marker": "",
+            "group": "runtime",
+            "active": true,
+            "url": null
+          }
+        ],
+        "risk_level": "low",
+        "risk_indicators": [],
+        "usage_locations": [
+          {
+            "file": "linkwatch/config.py",
+            "line": 3,
+            "symbol": "toml",
+            "kind": "import",
+            "snippet": "import toml",
+            "mapping": "distribution-name heuristic; mapping unconfirmed"
+          },
+          {
+            "file": "linkwatch/config.py",
+            "line": 37,
+            "symbol": "toml",
+            "kind": "usage",
+            "snippet": "data = toml.load(path)",
+            "mapping": "distribution-name heuristic; mapping unconfirmed; AST alias match, scope/shadowing not resolved"
+          },
+          {
+            "file": "tests/test_checker.py",
+            "line": 2,
+            "symbol": "linkwatch.config",
+            "kind": "affected-module test reference",
+            "snippet": "from linkwatch.config import Site",
+            "mapping": "AST import of a module that imports this dependency; test coverage not established"
+          },
+          {
+            "file": "tests/test_config.py",
+            "line": 3,
+            "symbol": "linkwatch.config",
+            "kind": "affected-module test reference",
+            "snippet": "from linkwatch.config import Settings, Site, load_settings",
+            "mapping": "AST import of a module that imports this dependency; test coverage not established"
+          }
+        ],
+        "evidence": [
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "pyproject.toml",
+            "line": 13,
+            "detail": "toml==0.10.2"
+          },
+          {
+            "classification": "OBSERVED",
+            "type": "declaration",
+            "file": "requirements.txt",
+            "line": 1,
+            "detail": "toml==0.10.2"
+          }
+        ],
+        "uncertainties": [],
+        "ai_recommendation": null,
+        "ai_error": null
+      }
+    ],
+    "scan_errors": [],
+    "python_files": 15,
+    "test_files": [
+      "tests/test_cache.py",
+      "tests/test_checker.py",
+      "tests/test_config.py",
+      "tests/test_report.py"
+    ],
+    "manifests": [
+      "pyproject.toml",
+      "requirements-dev.txt",
+      "requirements.txt"
+    ],
+    "limitations": [
+      "Offline manifest analysis is not a vulnerability, release freshness, or transitive dependency audit.",
+      "Markers evaluated against the backend Python environment; optional extras are not assumed active.",
+      "AST alias matches are approximate: shadowing, scope, dynamic imports, and configuration semantics need human review.",
+      "TOML line locations use literal matching; line 0 means a declaration could not be located exactly."
+    ],
+    "ai_status": "completed",
+    "model_info": {
+      "model": "gemma4:e2b",
+      "access_method": "Ollama local HTTP",
+      "live_inference": true,
+      "source": "https://ollama.com/library/gemma4",
+      "license": "Apache-2.0 (Gemma 4 model card)",
+      "model_card": "https://ai.google.dev/gemma/docs/core/model_card_4",
+      "digest": "45d11505b91d888e353859f5deeeeff3ffc9b3aa42263c00904120c53851ef96",
+      "details": {
+        "parent_model": "",
+        "format": "safetensors",
+        "family": "",
+        "families": null,
+        "parameter_size": "",
+        "quantization_level": "nvfp4",
+        "runner": "mlx"
+      },
+      "response_model": "gemma4:e2b",
+      "eval_count": 285
+    }
+  },
+  "verification": {
+    "scan_id": "625b055f-d880-4bb6-b9bd-7364413f59db",
+    "dependency_name": "pydantic",
+    "proposed_version": "2.11.7",
+    "verification_status": "NOT RUN",
+    "baseline": {
+      "status": "NOT RUN",
+      "classification": "OBSERVED",
+      "commands": [],
+      "exit_code": null,
+      "output": "",
+      "reason": "Execution disabled. Enable DEPENDIQ_ENABLE_EXECUTION=1, inspect/trust the repository, and prepare Docker with offline wheels.",
+      "python_version": null,
+      "duration_seconds": 0,
+      "passed": null,
+      "failed": null,
+      "skipped": null,
+      "tests_completed": false,
+      "installation_problem": false
+    },
+    "migration": {
+      "status": "NOT RUN",
+      "classification": "OBSERVED",
+      "commands": [],
+      "exit_code": null,
+      "output": "",
+      "reason": "Execution disabled. Enable DEPENDIQ_ENABLE_EXECUTION=1, inspect/trust the repository, and prepare Docker with offline wheels.",
+      "python_version": null,
+      "duration_seconds": 0,
+      "passed": null,
+      "failed": null,
+      "skipped": null,
+      "tests_completed": false,
+      "installation_problem": false
+    },
+    "static_comparison": {
+      "baseline": {
+        "classification": "OBSERVED",
+        "check": "AST syntax + manifest constraint checks; project tests not executed",
+        "errors": [],
+        "conflicts": [
+          "pydantic"
+        ]
+      },
+      "migration": {
+        "classification": "OBSERVED",
+        "check": "AST syntax + manifest constraint checks; project tests not executed",
+        "errors": [],
+        "conflicts": []
+      },
+      "changed_files": [
+        "pyproject.toml",
+        "requirements.txt"
+      ],
+      "classification": "OBSERVED"
+    },
+    "compatibility_gaps": [
+      "Static conflict resolution does not establish runtime API compatibility.",
+      "Migration tests have not completed."
+    ],
+    "limitations": [
+      "Containers reduce risk but are not a guarantee against malicious code; run only inspected repositories.",
+      "Original source is unchanged. Only same-package exact-version manifest migration is supported.",
+      "Offline wheels and a locally prepared container image are required; plugins are disabled, so plugin-dependent suites need a reviewed custom image."
+    ]
+  },
+  "open_concerns": [
+    "No security advisory or live package registry lookup was performed.",
+    "Migration runtime compatibility remains unverified."
+  ],
+  "limitations": [
+    "Offline manifest analysis is not a vulnerability, release freshness, or transitive dependency audit.",
+    "Markers evaluated against the backend Python environment; optional extras are not assumed active.",
+    "AST alias matches are approximate: shadowing, scope, dynamic imports, and configuration semantics need human review.",
+    "TOML line locations use literal matching; line 0 means a declaration could not be located exactly."
+  ]
+}
