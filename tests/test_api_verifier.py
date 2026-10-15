@@ -62,6 +62,10 @@ def test_subprocess_errors_and_timeout():
 
 def test_runner_compiles():
     compile(RUNNER,'fixed-runner','exec')
+    import ast
+    tree=ast.parse(RUNNER)
+    assignment=next(n for n in tree.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=='plugin' for t in n.targets))
+    compile(ast.literal_eval(assignment.value),'pytest-plugin','exec')
 
 
 def test_docker_hardening(monkeypatch,tmp_path):
@@ -81,3 +85,21 @@ def test_rewrite_preserves_other_packages_and_markers(repo):
     p.write_text('example==1; python_version >= "3"\nexample-tools==1\n# example==1 comment\n')
     rewrite(repo,'example','2')
     assert p.read_text()=='example==2; python_version >= "3"\nexample-tools==1\n# example==1 comment\n'
+
+
+def test_toml_rewrite_preserves_metadata(repo):
+    p=repo/'pyproject.toml'
+    p.write_text('[project]\nname="example"\ndescription="example"\n# preserve this comment\ndependencies=["example>=2", "example-tools==1"]\n')
+    rewrite(repo,'example','3')
+    import tomllib
+    data=tomllib.loads(p.read_text())
+    assert data['project']['name']=='example' and data['project']['description']=='example'
+    assert data['project']['dependencies']==['example==3','example-tools==1']
+    assert '# preserve this comment' in p.read_text()
+
+
+def test_zero_exit_without_test_summary_is_incomplete(monkeypatch,repo):
+    from backend.models import Outcome
+    import backend.verifier as mod
+    monkeypatch.setattr(mod,'run_command',lambda command,timeout=120:Outcome(status='PASSED',exit_code=0,output='No actual summary'))
+    assert mod.execute(repo,'dependiq:fixture').status=='INCOMPLETE'

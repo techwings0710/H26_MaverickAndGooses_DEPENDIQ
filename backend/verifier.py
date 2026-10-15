@@ -13,7 +13,6 @@ from packaging.utils import canonicalize_name
 from packaging.version import Version
 from .models import Outcome, Verification
 from .paths import files, approve, fingerprint
-from .scanner import scan
 
 
 def run_command(command, timeout=120):
@@ -51,12 +50,20 @@ def rewrite(root, dependency, version):
             continue
         text = path.read_text()
         if path.name == 'pyproject.toml':
-            # Quoted PEP 508 literals only. Preserve each original quote style.
-            pattern = re.compile(r"([\"'])([^\"'\n]*)([\"'])")
-            def literal(match):
-                if match[1] != match[3]: return match[0]
-                return match[1] + replace_requirement(match[2]) + match[3]
-            updated = pattern.sub(literal, text)
+            import tomlkit
+            document = tomlkit.parse(text)
+            project = document.get('project', {})
+            arrays = [project.get('dependencies', [])]
+            arrays.extend(project.get('optional-dependencies', {}).values())
+            arrays.extend(document.get('dependency-groups', {}).values())
+            for array in arrays:
+                if isinstance(array, list):
+                    for index, item in enumerate(array):
+                        if isinstance(item, str):
+                            replacement = replace_requirement(item)
+                            if replacement != item:
+                                array[index] = replacement
+            updated = tomlkit.dumps(document)
         else:
             lines = []
             for line in text.splitlines(keepends=True):
@@ -107,7 +114,7 @@ if not reqs:
     data = __import__('tomllib').loads(pathlib.Path('pyproject.toml').read_text()) if pathlib.Path('pyproject.toml').exists() else {}
     install += data.get('project',{}).get('dependencies',[])
 print('INSTALL_COMMAND='+json.dumps(install), flush=True)
-rc = subprocess.call(install, env=env) if len(install) > 10 else 0
+rc = subprocess.call(install, env=env) if reqs or len(install) > 8 else 0
 report = '/tmp/result.json'
 env['PYTHONPATH'] = '/tmp/deps:/repo'
 env['PYTEST_DISABLE_PLUGIN_AUTOLOAD'] = '1'

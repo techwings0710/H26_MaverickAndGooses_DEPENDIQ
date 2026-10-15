@@ -1,0 +1,13 @@
+{
+  "python": "3.13.5",
+  "platform": "macOS-26.3.1-arm64-arm-64bit-Mach-O",
+  "packages": {
+    "fastapi": "0.143.1",
+    "uvicorn": "0.54.0",
+    "pydantic": "2.14.1",
+    "httpx": "0.28.1",
+    "pytest": "9.1.1",
+    "packaging": "26.3",
+    "tomlkit": "0.15.1"
+  }
+}

@@ -58,5 +58,28 @@ def trace(root: Path, paths: list[Path], names: list[str]):
         for node in ast.walk(tree):
             if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id in bindings:
                 name, symbol, origin = bindings[node.id]
-                found[name].append(Usage(file=rel, line=node.lineno, symbol=symbol, kind='test reference' if 'test' in path.parts or path.name.startswith('test_') else 'usage', snippet=lines[node.lineno - 1].strip()[:300], mapping=origin + '; AST alias match, scope/shadowing not resolved'))
+                found[name].append(Usage(file=rel, line=node.lineno, symbol=symbol, kind='test reference' if 'tests' in path.parts or path.name.startswith('test_') else 'usage', snippet=lines[node.lineno - 1].strip()[:300], mapping=origin + '; AST alias match, scope/shadowing not resolved'))
+    # Trace tests which import affected application modules. This is a static link,
+    # not a claim that the tests cover every dependency API.
+    for name in names:
+        affected = {str(Path(u.file).with_suffix('')).replace('/', '.') for u in found[name] if u.kind == 'import' and 'tests/' not in u.file}
+        for path in paths:
+            rel = str(path.relative_to(root))
+            if path.suffix == '.py' and (path.name.startswith('test_') or 'tests' in path.parts):
+                try:
+                    source = path.read_text(); tree = ast.parse(source)
+                    for node in ast.walk(tree):
+                        modules = [a.name for a in node.names] if isinstance(node, ast.Import) else [node.module] if isinstance(node, ast.ImportFrom) and not node.level else []
+                        for module in modules:
+                            if module in affected:
+                                found[name].append(Usage(file=rel, line=node.lineno, symbol=module, kind='affected-module test reference', snippet=source.splitlines()[node.lineno-1].strip()[:300], mapping='AST import of a module that imports this dependency; test coverage not established'))
+                except (OSError, SyntaxError, UnicodeError):
+                    pass
+            elif path.suffix in ('.toml', '.ini', '.cfg', '.yaml', '.yml', '.json') and path.name != 'pyproject.toml':
+                try:
+                    for line, text in enumerate(path.read_text().splitlines(), 1):
+                        if any(alias in text for alias in mapping[name]):
+                            found[name].append(Usage(file=rel, line=line, symbol=name, kind='configuration text reference', snippet=text.strip()[:300], mapping='literal text match only; configuration semantics unconfirmed'))
+                except (OSError, UnicodeError):
+                    pass
     return found, errors

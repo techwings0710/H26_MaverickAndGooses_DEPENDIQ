@@ -15,7 +15,7 @@ export default function App() {
   useEffect(()=>{refreshHealth()},[])
   async function action(name,fn){setBusy(name);setError('');try {await fn()} catch(e){setError(e.message || 'Backend unavailable. Check the local server.')} finally{setBusy('')}}
   const runScan=(repositoryPath=path)=>action('scan',async()=>{const data=await request('scan',{repository_path:repositoryPath});setScan(data);setSelected(data.dependencies[0]?.name||'');setVerification(null);setExported(false);setView('overview');setVersion('');setTrusted(false)})
-  const analyze=()=>action('analyze',async()=>{const data=await request('analyze',scan);setScan(data);setView('intelligence');await refreshHealth()})
+  const analyze=()=>action('analyze',async()=>{const data=await request('analyze',scan);setScan(data);setExported(false);setView('intelligence');await refreshHealth()})
   const verify=()=>action('verify',async()=>{const data=await request('verify',{scan_id:scan.scan_id,dependency_name:selected,proposed_version:version,trusted_repository:trusted});setVerification(data);setExported(false)})
   const exportFile=()=>action('export',async()=>{await downloadCapsule(scan.scan_id);setExported(true)})
   const selectDep=name=>{setSelected(name);setView('dependencies')}

@@ -1,0 +1,69 @@
+{
+  "docker_executable": null,
+  "verification": {
+    "scan_id": "0a4f4b58-9e35-44f5-a549-a8049a6d79a6",
+    "dependency_name": "pydantic",
+    "proposed_version": "2.11.7",
+    "verification_status": "NOT RUN",
+    "baseline": {
+      "status": "NOT RUN",
+      "classification": "OBSERVED",
+      "commands": [],
+      "exit_code": null,
+      "output": "",
+      "reason": "Docker executable is unavailable. No project tests executed on host.",
+      "python_version": null,
+      "duration_seconds": 0,
+      "passed": null,
+      "failed": null,
+      "skipped": null,
+      "tests_completed": false,
+      "installation_problem": false
+    },
+    "migration": {
+      "status": "NOT RUN",
+      "classification": "OBSERVED",
+      "commands": [],
+      "exit_code": null,
+      "output": "",
+      "reason": "Docker executable is unavailable. No project tests executed on host.",
+      "python_version": null,
+      "duration_seconds": 0,
+      "passed": null,
+      "failed": null,
+      "skipped": null,
+      "tests_completed": false,
+      "installation_problem": false
+    },
+    "static_comparison": {
+      "baseline": {
+        "classification": "OBSERVED",
+        "check": "AST syntax + manifest constraint checks; project tests not executed",
+        "errors": [],
+        "conflicts": [
+          "pydantic"
+        ]
+      },
+      "migration": {
+        "classification": "OBSERVED",
+        "check": "AST syntax + manifest constraint checks; project tests not executed",
+        "errors": [],
+        "conflicts": []
+      },
+      "changed_files": [
+        "pyproject.toml",
+        "requirements.txt"
+      ],
+      "classification": "OBSERVED"
+    },
+    "compatibility_gaps": [
+      "Static conflict resolution does not establish runtime API compatibility.",
+      "Migration tests have not completed."
+    ],
+    "limitations": [
+      "Containers reduce risk but are not a guarantee against malicious code; run only inspected repositories.",
+      "Original source is unchanged. Only same-package exact-version manifest migration is supported.",
+      "Offline wheels and a locally prepared container image are required; plugins are disabled, so plugin-dependent suites need a reviewed custom image."
+    ]
+  }
+}
