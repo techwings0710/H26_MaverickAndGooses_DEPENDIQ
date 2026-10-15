@@ -1,0 +1,15 @@
+.venv/
+venv/
+node_modules/
+dist/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+.env.*
+!.env.example
+.DS_Store
+.dependiq/
+capsules/*.json
+!capsules/.gitkeep
+wheelhouse/

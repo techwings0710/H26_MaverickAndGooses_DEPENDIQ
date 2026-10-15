@@ -1,0 +1,4 @@
+[project]
+name = "dependiq-test-fixture"
+version = "0.0.0"
+dependencies = ["example-library>=2", "python-dateutil"]
