@@ -14,7 +14,9 @@ Implementation and locally observed validation:
 
 Integrator / external requirements:
 
-- [ ] Initialize main if absent, then open/review the implementation PR; never force-push.
+- [x] Integrator created main; delivery PR opened: https://github.com/techwings0710/iste/pull/1.
+- [ ] Review PR and complete Integrator-only merge; never force-push.
+- [ ] Set main as the default branch (the first published feature branch became the default in the initially empty repository).
 - [ ] Apply main protection: PRs required; force pushes/deletions blocked; Integrator-only merge policy.
 - [ ] Confirm exact repository name H26_TeamName_ProjectName with organizers. Current destination is techwings0710/iste; do not rename without authorization.
 - [ ] Obtain/confirm official starter fork URL and provenance. LinkWatch is the target, not automatically the starter.

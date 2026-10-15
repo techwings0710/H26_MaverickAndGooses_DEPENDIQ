@@ -162,7 +162,9 @@ The committed [LinkWatch capsule](docs/linkwatch-exit-capsule.json) is a dated *
 
 ## Submission and collaboration
 
-All implementation lives on **astra-complete-build**. Never force-push, push directly to main, or merge your own delivery PR. The designated Integrator reviews and merges. No existing teammate work was present during repository inspection.
+Delivery: [feature branch](https://github.com/techwings0710/iste/tree/astra-complete-build) · [PR #1](https://github.com/techwings0710/iste/pull/1), open for Integrator review. The Integrator created main from the initial implementation; this PR adds final fixes and documentation.
+
+All build-agent commits were made on **astra-complete-build**. Never force-push, push directly to main, or merge your own delivery PR. The designated Integrator reviews and merges. No existing teammate work was present during repository inspection.
 
 **Submission issues requiring organizer/Integrator confirmation:** current destination `techwings0710/iste` does not match `H26_TeamName_ProjectName`; the official starter-fork URL was not provided; team identities and official slide template remain to be supplied. Do not rename or claim starter provenance without confirmation. If main is absent, the Integrator must bootstrap it before a PR can target it.
 
