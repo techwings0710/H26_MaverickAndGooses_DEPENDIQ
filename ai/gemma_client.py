@@ -30,8 +30,11 @@ class GemmaClient:
             with httpx.Client(base_url=self.base, timeout=3, transport=self.transport, trust_env=False) as client:
                 response = client.get('/api/tags')
                 response.raise_for_status()
-                models = response.json().get('models', [])
-                match = next((m for m in models if m.get('name') == self.model or m.get('model') == self.model), None)
+                payload = response.json()
+                if not isinstance(payload, dict) or not isinstance(payload.get('models', []), list):
+                    raise ValueError('Malformed Ollama model inventory')
+                models = payload.get('models', [])
+                match = next((m for m in models if isinstance(m, dict) and (m.get('name') == self.model or m.get('model') == self.model)), None)
                 if not match:
                     raise GemmaError(f'{self.model} is not installed. Run ollama list, then pull the intended local Gemma 4 tag.')
                 self.info.update({'digest': match.get('digest'), 'details': match.get('details', {})})
@@ -50,6 +53,8 @@ class GemmaClient:
                         'options': {'temperature': 0.2, 'num_predict': 3000, 'num_ctx': 8192}, 'keep_alive': '5m'})
                     response.raise_for_status()
                     body = response.json()
+                    if not isinstance(body, dict):
+                        raise ValueError('Ollama response is not a JSON object')
                     if body.get('done') is False:
                         raise GemmaError('Ollama returned an incomplete generation.')
                     parsed = Recommendation.model_validate_json(body['message']['content'])

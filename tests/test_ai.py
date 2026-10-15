@@ -59,3 +59,11 @@ def test_cloud_forbidden(monkeypatch):
     with pytest.raises(GemmaError):GemmaClient()
     monkeypatch.setenv('GEMMA_MODEL','gemma4:e2b');monkeypatch.setenv('OLLAMA_BASE_URL','https://example.com')
     with pytest.raises(GemmaError):GemmaClient()
+
+
+def test_malformed_ollama_envelope():
+    def malformed(request):
+        if request.url.path=='/api/tags':return httpx.Response(200,json={'models':[{'name':'gemma4:e2b'}]})
+        return httpx.Response(200,json=[])
+    with pytest.raises(GemmaError,match='invalid structured JSON'):GemmaClient(httpx.MockTransport(malformed)).recommend(Dependency(name='example'))
+    with pytest.raises(GemmaError,match='unavailable'):GemmaClient(httpx.MockTransport(lambda r:httpx.Response(200,json=[]))).available()

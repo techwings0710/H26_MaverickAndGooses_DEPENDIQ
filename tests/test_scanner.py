@@ -70,3 +70,18 @@ def test_markers_optional_groups_and_cycles(repo):
 def test_large_file_is_explicit_error(repo):
     (repo/'large.bin').write_bytes(b'x'*2_000_001)
     with pytest.raises(ValueError,match='2 MB'): scan(str(repo))
+
+
+def test_related_tests_and_config_references(repo):
+    (repo/'requirements.txt').write_text('example>=1\n')
+    (repo/'app.py').write_text('import example\n')
+    (repo/'test_app.py').write_text('from app import run\n')
+    (repo/'settings.ini').write_text('plugin = example\n')
+    result=scan(str(repo)).dependencies[0]
+    assert any(u.kind=='affected-module test reference' and u.file=='test_app.py' for u in result.usage_locations)
+    assert any(u.kind=='configuration text reference' and u.line==1 for u in result.usage_locations)
+
+
+def test_include_escape_is_not_followed(repo):
+    (repo/'requirements.txt').write_text('-r ../outside.txt\n')
+    assert any('escapes' in e for e in scan(str(repo)).scan_errors)
